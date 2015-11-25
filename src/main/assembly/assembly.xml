@@ -15,6 +15,14 @@
 			<directory>src/main/scripts</directory>
 			<outputDirectory>/bin</outputDirectory>
 		</fileSet>
+		<fileSet>
+			<directory>src/main/repository</directory>
+			<outputDirectory>/repository</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/logs</directory>
+			<outputDirectory>/logs</outputDirectory>
+		</fileSet>
 	</fileSets>
 	<dependencySets>
 		<dependencySet>

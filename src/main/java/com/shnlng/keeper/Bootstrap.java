@@ -1,5 +1,8 @@
 package com.shnlng.keeper;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -8,7 +11,7 @@ import org.apache.log4j.Logger;
 
 public class Bootstrap {
 	public static Logger logger = Logger.getLogger(Bootstrap.class);
-	
+
 	public static Properties keeperProps = null;
 	public static int keeperServerPort;
 	public static String keeperRepoPath;
@@ -19,15 +22,25 @@ public class Bootstrap {
 	}
 
 	public static void loadProperties() {
+		InputStream is = null;
 		String configPath = System.getProperty("config");
-		if(StringUtils.isEmpty(configPath)){
+		if (StringUtils.isEmpty(configPath)) {
 			configPath = "/keeper.conf";
-			
+
+			is = Bootstrap.class.getClass().getResourceAsStream(configPath);
+		} else {
+
+			try {
+				is = new BufferedInputStream(new FileInputStream(configPath));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				logger.error("config file not fould");
+				System.exit(1);
+			}
+
 		}
+
 		logger.info("load config file from this path: " + configPath);
-		
-		InputStream is = Bootstrap.class.getClass().getResourceAsStream(
-				configPath);
 		keeperProps = new Properties();
 		try {
 			keeperProps.load(is);

@@ -1,5 +1,6 @@
 package com.shnlng.keeper;
 
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -8,6 +9,7 @@ import com.shnlng.keeper.servlet.EchoServlet;
 import com.shnlng.keeper.servlet.ShowServlet;
 
 public class KeeperServer extends Server {
+	private static Logger logger = Logger.getLogger(KeeperServer.class);
 	private ServletContextHandler context;
 	
 	public KeeperServer(){
@@ -19,7 +21,7 @@ public class KeeperServer extends Server {
 	}
 	
 	private void init(){
-		
+		logger.info("init");
 		initContext();
 		
 		setServlets();
@@ -27,17 +29,23 @@ public class KeeperServer extends Server {
 	}
 	
 	private void initContext() {
+		logger.info("init servlet context");
 		this.context = new ServletContextHandler(ServletContextHandler.SESSIONS);  
         context.setContextPath("/");  
         this.setHandler(this.context);  
 	}
 
 	private void setServlets() {
+		logger.info("set servlets");
+		logger.info("set echo servlet");
 		this.context.addServlet(new ServletHolder(new EchoServlet()), "/echo");
+		
+		logger.info("set show servlet");
 		this.context.addServlet(new ServletHolder(new ShowServlet()), "/show");
 	}
 
 	public void run(){
+		logger.info("running keeper server for http requests");
 		this.init();
         
         try {
@@ -45,6 +53,8 @@ public class KeeperServer extends Server {
 			this.join();
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("keeper server running into errors");
+			logger.error(e.getMessage());
 		}
 	}
 }
