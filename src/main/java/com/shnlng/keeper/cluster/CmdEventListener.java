@@ -26,8 +26,10 @@ public class CmdEventListener implements MessageListener<CmdEvent> {
 		if (cmdActionClass != null) {
 			CmdAction cmdAction = null;
 			try {
+				logger.info("create a new instance for this action class " + cmdActionClass.getName());
 				cmdAction = cmdActionClass.newInstance();
 
+				logger.info("run command action.");
 				cmdAction.run(cmdEvent.getParams());
 			} catch (InstantiationException e) {
 				e.printStackTrace();

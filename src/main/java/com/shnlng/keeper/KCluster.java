@@ -70,7 +70,7 @@ public class KCluster {
 		if (instance == null) {
 			throw new Exception("cluster is not ready.");
 		}
-
+		
 		ITopic<T> topic = instance.getTopic(topicName.value);
 		topic.addMessageListener(msgListener);
 	}

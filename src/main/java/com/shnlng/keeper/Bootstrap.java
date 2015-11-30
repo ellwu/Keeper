@@ -9,6 +9,8 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.shnlng.keeper.cluster.CmdEventListener;
+
 public class Bootstrap {
 	public static final Logger logger = Logger.getLogger(Bootstrap.class);
 
@@ -65,7 +67,17 @@ public class Bootstrap {
 
 			@Override
 			public void run() {
+				logger.info("start cluster in a new thread.");
 				cluster.start();
+				
+				try {
+					
+					logger.info("set command event listener for stand alone keeper.");
+					cluster.addListeners(KCluster.EventTopic.CommandEventTopic, new CmdEventListener());
+				} catch (Exception e) {
+					e.printStackTrace();
+					logger.error("set command event listener for stand alone keeper. error occurs!");
+				}
 			}
 
 		});
