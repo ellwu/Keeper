@@ -14,9 +14,8 @@ import com.shnlng.keeper.cluster.CmdEventListener;
 public class Bootstrap {
 	public static final Logger logger = Logger.getLogger(Bootstrap.class);
 
-	public static Properties keeperProps = null;
-	public static int keeperServerPort;
-	public static String keeperRepoPath;
+	private static Properties keeperProps = null;
+	private static int keeperServerPort;
 
 	public static KCluster cluster = null;
 	public static KeeperServer server = null;
@@ -25,10 +24,23 @@ public class Bootstrap {
 		logger.info("Bootstrap init");
 		loadProperties();
 	}
+	
+	public static Properties getProps(){
+		logger.info("Bootstrap getProps");
+		
+		if(keeperProps == null){
+			loadProperties();
+		}
+		
+		return keeperProps;
+	}
 
 	public static void loadProperties() {
+		logger.info("Bootstrap loadProperties");
+		
 		InputStream is = null;
 		String configPath = System.getProperty("config");
+		
 		if (StringUtils.isEmpty(configPath)) {
 			configPath = "/keeper.conf";
 

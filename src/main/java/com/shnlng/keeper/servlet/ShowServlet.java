@@ -26,7 +26,7 @@ public class ShowServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		logger.info("init ShowServlet");
-		keeperRepoPath = Bootstrap.keeperProps.getProperty("keeper.repository.location");
+		keeperRepoPath = Bootstrap.getProps().getProperty("keeper.repository.location");
 		if (StringUtils.isEmpty(keeperRepoPath)) {
 			keeperRepoPath = System.getProperty("KEEPER_PATH");
 		}
