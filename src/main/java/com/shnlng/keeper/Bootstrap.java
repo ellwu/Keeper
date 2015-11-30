@@ -10,11 +10,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class Bootstrap {
-	public static Logger logger = Logger.getLogger(Bootstrap.class);
+	public static final Logger logger = Logger.getLogger(Bootstrap.class);
 
 	public static Properties keeperProps = null;
 	public static int keeperServerPort;
 	public static String keeperRepoPath;
+
+	public static KCluster cluster = null;
+	public static KeeperServer server = null;
 
 	private static void init() {
 		logger.info("Bootstrap init");
@@ -53,10 +56,24 @@ public class Bootstrap {
 		}
 	}
 
-	public static void start() {
-		logger.info("start");
-		init();
+	private static void startCluster() {
+		logger.info("start cluster");
 
+		cluster = new KCluster();
+
+		Thread clusterThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				cluster.start();
+			}
+
+		});
+
+		clusterThread.start();
+	}
+
+	private static void startkeeperServer() {
 		String strPort = keeperProps.getProperty("keeper.server.port");
 		try {
 			keeperServerPort = Integer.parseInt(strPort);
@@ -65,11 +82,19 @@ public class Bootstrap {
 			keeperServerPort = 8080;
 		}
 
-		KeeperServer server = new KeeperServer(keeperServerPort);
+		server = new KeeperServer(keeperServerPort);
 
 		logger.info("run server at " + keeperServerPort);
 		server.run();
+	}
 
+	public static void start() {
+		logger.info("start");
+		init();
+
+		startCluster();
+
+		startkeeperServer();
 	}
 
 	public static void main(String[] args) {

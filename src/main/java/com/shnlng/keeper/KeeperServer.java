@@ -9,46 +9,48 @@ import com.shnlng.keeper.servlet.EchoServlet;
 import com.shnlng.keeper.servlet.ShowServlet;
 
 public class KeeperServer extends Server {
-	private static Logger logger = Logger.getLogger(KeeperServer.class);
+	private static final Logger logger = Logger.getLogger(KeeperServer.class);
+
 	private ServletContextHandler context;
-	
-	public KeeperServer(){
+
+	public KeeperServer() {
 		super();
 	}
-	
-	public KeeperServer(int port){
+
+	public KeeperServer(int port) {
 		super(port);
 	}
-	
-	private void init(){
+
+	private void init() {
 		logger.info("init");
+
 		initContext();
-		
+
 		setServlets();
-		
+
 	}
-	
+
 	private void initContext() {
 		logger.info("init servlet context");
-		this.context = new ServletContextHandler(ServletContextHandler.SESSIONS);  
-        context.setContextPath("/");  
-        this.setHandler(this.context);  
+		this.context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		context.setContextPath("/");
+		this.setHandler(this.context);
 	}
 
 	private void setServlets() {
 		logger.info("set servlets");
-		logger.info("set echo servlet");
+		logger.info("set echo servlet to handle mapping /echo");
 		this.context.addServlet(new ServletHolder(new EchoServlet()), "/echo");
-		
-		logger.info("set show servlet");
+
+		logger.info("set show servlet to handle mapping /show");
 		this.context.addServlet(new ServletHolder(new ShowServlet()), "/show");
 	}
 
-	public void run(){
+	public void run() {
 		logger.info("running keeper server for http requests");
 		this.init();
-        
-        try {
+
+		try {
 			this.start();
 			this.join();
 		} catch (Exception e) {
@@ -57,4 +59,5 @@ public class KeeperServer extends Server {
 			logger.error(e.getMessage());
 		}
 	}
+
 }
