@@ -26,12 +26,8 @@ public class AdServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		logger.info("init ShowServlet");
-		keeperRepoPath = Bootstrap.getProps().getProperty("keeper.repository.location");
-		if (StringUtils.isEmpty(keeperRepoPath)) {
-			keeperRepoPath = System.getProperty("KEEPER_PATH");
-		}
 
-		keeperRepoPath = keeperRepoPath + File.separator + "repository";
+		keeperRepoPath = Bootstrap.getRepoPath();
 
 		logger.info("set keeper's repository path to: " + keeperRepoPath);
 	}

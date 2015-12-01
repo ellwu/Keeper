@@ -1,6 +1,7 @@
 package com.shnlng.keeper;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -17,30 +18,30 @@ public class Bootstrap {
 	private static Properties keeperProps = null;
 	private static int keeperServerPort;
 
-	public static KCluster cluster = null;
+	public static KCluster cluster = new KCluster();
 	public static KeeperServer server = null;
 
 	private static void init() {
 		logger.info("Bootstrap init");
 		loadProperties();
 	}
-	
-	public static Properties getProps(){
+
+	public static Properties getProps() {
 		logger.info("Bootstrap getProps");
-		
-		if(keeperProps == null){
+
+		if (keeperProps == null) {
 			loadProperties();
 		}
-		
+
 		return keeperProps;
 	}
 
 	public static void loadProperties() {
 		logger.info("Bootstrap loadProperties");
-		
+
 		InputStream is = null;
 		String configPath = System.getProperty("config");
-		
+
 		if (StringUtils.isEmpty(configPath)) {
 			configPath = "/keeper.conf";
 
@@ -70,10 +71,29 @@ public class Bootstrap {
 		}
 	}
 
+	public static String getKeeperPath() {
+		String keeperRepoPath = Bootstrap.getProps().getProperty("keeper.repository.location");
+		if (StringUtils.isEmpty(keeperRepoPath)) {
+			keeperRepoPath = System.getProperty("KEEPER_PATH");
+
+			if (StringUtils.isEmpty(keeperRepoPath)) {
+				keeperRepoPath = System.getProperty("user.dir");
+			}
+		}
+
+		return keeperRepoPath;
+	}
+
+	public static String getRepoPath() {
+		return Bootstrap.getKeeperPath() + File.separator + "repository";
+	}
+	
+	public static String getAdAbsPath(String adId){
+		return getRepoPath() + File.separator + adId;
+	}
+
 	private static void startCluster() {
 		logger.info("start cluster");
-
-		cluster = new KCluster();
 
 		Thread clusterThread = new Thread(new Runnable() {
 
@@ -81,9 +101,9 @@ public class Bootstrap {
 			public void run() {
 				logger.info("start cluster in a new thread.");
 				cluster.start();
-				
+
 				try {
-					
+
 					logger.info("set command event listener for stand alone keeper.");
 					cluster.addListeners(KCluster.EventTopic.CommandEventTopic, new CmdEventListener());
 				} catch (Exception e) {
@@ -116,17 +136,16 @@ public class Bootstrap {
 		logger.info("start");
 		init();
 
-		if(Boolean.parseBoolean(getProps().getProperty("keeper.cluster.enable"))){
+		if (Boolean.parseBoolean(getProps().getProperty("keeper.cluster.enable"))) {
 			logger.info("cluster was enabled, starting....");
 			startCluster();
 		}
 
-		if(Boolean.parseBoolean(getProps().getProperty("keeper.server.enable"))){
+		if (Boolean.parseBoolean(getProps().getProperty("keeper.server.enable"))) {
 			logger.info("server was enabled, starting....");
 			logger.info("start");
 			startkeeperServer();
 		}
-		
 
 		logger.info("end");
 	}
