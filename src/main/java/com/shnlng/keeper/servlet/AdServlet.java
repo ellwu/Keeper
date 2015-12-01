@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 
 import com.shnlng.keeper.Bootstrap;
 
-public class ShowServlet extends HttpServlet {
-	private static Logger logger = Logger.getLogger(ShowServlet.class);
+public class AdServlet extends HttpServlet {
+	private static Logger logger = Logger.getLogger(AdServlet.class);
 	private static final long serialVersionUID = 1L;
 	private String keeperRepoPath;
 	private int bufferSize = 2048;
