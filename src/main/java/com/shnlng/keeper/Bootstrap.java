@@ -98,7 +98,7 @@ public class Bootstrap {
 	}
 
 	private static void startkeeperServer() {
-		String strPort = keeperProps.getProperty("keeper.server.port");
+		String strPort = getProps().getProperty("keeper.server.port");
 		try {
 			keeperServerPort = Integer.parseInt(strPort);
 		} catch (Exception e) {
@@ -116,9 +116,19 @@ public class Bootstrap {
 		logger.info("start");
 		init();
 
-		startCluster();
+		if(Boolean.parseBoolean(getProps().getProperty("keeper.cluster.enable"))){
+			logger.info("cluster was enabled, starting....");
+			startCluster();
+		}
 
-		startkeeperServer();
+		if(Boolean.parseBoolean(getProps().getProperty("keeper.server.enable"))){
+			logger.info("server was enabled, starting....");
+			logger.info("start");
+			startkeeperServer();
+		}
+		
+
+		logger.info("end");
 	}
 
 	public static void main(String[] args) {
