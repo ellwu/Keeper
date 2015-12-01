@@ -60,11 +60,23 @@ public class AdServlet extends HttpServlet {
 			logger.info("file download starting...");
 			resp.reset();
 			resp.setHeader("Content-disposition", "attachment;filename=" + id);
-			ServletOutputStream sops = resp.getOutputStream();
-			FileInputStream fis = new FileInputStream(file);
-			copyStream(fis, sops, true);
-			fis.close();
-			sops.close();
+			
+			ServletOutputStream sops = null;
+			FileInputStream fis = null;
+			
+			try{
+				sops = resp.getOutputStream();
+				fis = new FileInputStream(file);
+				
+				copyStream(fis, sops, true);
+			}catch(Exception e){
+				throw e;
+			}finally{
+				logger.info("closing io");
+				fis.close();
+				sops.close();
+			}
+			
 			fis = null;
 			sops = null;
 			file = null;

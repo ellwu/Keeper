@@ -42,7 +42,7 @@ public class KeeperServer extends Server {
 		logger.info("set echo servlet to handle mapping /echo");
 		this.context.addServlet(new ServletHolder(new EchoServlet()), "/echo");
 
-		logger.info("set show servlet to handle mapping /show");
+		logger.info("set show servlet to handle mapping /ad");
 		this.context.addServlet(new ServletHolder(new AdServlet()), "/ad");
 	}
 
