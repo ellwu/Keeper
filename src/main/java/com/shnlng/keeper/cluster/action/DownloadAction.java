@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.shnlng.keeper.Bootstrap;
-import com.shnlng.keeper.cluster.CmdAction;
+import com.shnlng.keeper.cluster.event.CmdAction;
 
 public class DownloadAction implements CmdAction, Serializable {
 

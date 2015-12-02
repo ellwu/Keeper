@@ -1,4 +1,4 @@
-package com.shnlng.keeper.cluster;
+package com.shnlng.keeper.cluster.event;
 
 import java.util.Date;
 import java.util.Map;
@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.hazelcast.core.Member;
 import com.hazelcast.core.Message;
 import com.hazelcast.core.MessageListener;
+import com.shnlng.keeper.cluster.KNoder;
 
 public abstract class ActRespEventListener implements
 		MessageListener<ActRespEvent> {

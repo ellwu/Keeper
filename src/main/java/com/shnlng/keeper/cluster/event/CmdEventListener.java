@@ -1,4 +1,4 @@
-package com.shnlng.keeper.cluster;
+package com.shnlng.keeper.cluster.event;
 
 import java.util.Date;
 
@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.hazelcast.core.Member;
 import com.hazelcast.core.Message;
 import com.hazelcast.core.MessageListener;
+import com.shnlng.keeper.cluster.KNoder;
 
 public class CmdEventListener implements MessageListener<CmdEvent> {
 	public static final Logger logger = Logger.getLogger(CmdEventListener.class);

@@ -12,10 +12,10 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ITopic;
 import com.hazelcast.core.Member;
 import com.hazelcast.core.MessageListener;
-import com.shnlng.keeper.cluster.ActRespEvent;
-import com.shnlng.keeper.cluster.CmdAction;
-import com.shnlng.keeper.cluster.CmdEvent;
 import com.shnlng.keeper.cluster.KNoder;
+import com.shnlng.keeper.cluster.event.ActRespEvent;
+import com.shnlng.keeper.cluster.event.CmdAction;
+import com.shnlng.keeper.cluster.event.CmdEvent;
 
 public class KCluster {
 	public static final Logger logger = Logger.getLogger(KCluster.class);

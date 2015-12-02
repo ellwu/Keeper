@@ -1,4 +1,4 @@
-package com.shnlng.keeper.cluster;
+package com.shnlng.keeper.cluster.event;
 
 import java.io.Serializable;
 import java.util.Map;
