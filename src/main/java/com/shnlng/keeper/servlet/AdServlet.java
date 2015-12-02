@@ -18,8 +18,10 @@ import org.apache.log4j.Logger;
 import com.shnlng.keeper.Bootstrap;
 
 public class AdServlet extends HttpServlet {
-	private static Logger logger = Logger.getLogger(AdServlet.class);
+	
 	private static final long serialVersionUID = 1L;
+	
+	private static Logger logger = Logger.getLogger(AdServlet.class);
 	private String keeperRepoPath;
 	private int bufferSize = 2048;
 
@@ -66,7 +68,7 @@ public class AdServlet extends HttpServlet {
 				
 				copyStream(fis, sops, true);
 			}catch(Exception e){
-				throw e;
+				logger.error("closing io" + e.getMessage());
 			}finally{
 				logger.info("closing io");
 				fis.close();

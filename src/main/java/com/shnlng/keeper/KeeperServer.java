@@ -5,8 +5,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import com.shnlng.keeper.servlet.EchoServlet;
 import com.shnlng.keeper.servlet.AdServlet;
+import com.shnlng.keeper.servlet.EchoServlet;
+import com.shnlng.keeper.servlet.MenuServlet;
 
 public class KeeperServer extends Server {
 	private static final Logger logger = Logger.getLogger(KeeperServer.class);
@@ -44,6 +45,9 @@ public class KeeperServer extends Server {
 
 		logger.info("set show servlet to handle mapping /ad");
 		this.context.addServlet(new ServletHolder(new AdServlet()), "/ad");
+		
+		logger.info("set show servlet to handle mapping /menu");
+		this.context.addServlet(new ServletHolder(new MenuServlet()), "/menu");
 	}
 
 	public void run() {
