@@ -34,6 +34,8 @@ public class MenuServlet extends HttpServlet {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
+		
+		String adHostURL = req.getRequestURL().toString().replace("menu", "ad");
 
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json;charset=UTF-8");
@@ -48,16 +50,14 @@ public class MenuServlet extends HttpServlet {
 		for (int i = 1; i < 4; i++) {
 			Item e = new Item();
 
-			String adId = IdGen.id32();
+			String adId = "ADV000" + i;
 			e.setAdId(adId);
 			e.setAdvertiserId(IdGen.id32());
 			e.setPlaySequence(i * 10);
 
 			List<String> adUrls = new ArrayList<String>();
 
-			adUrls.add("http://192.168.10.1:8090/ad?id=" + adId);
-			adUrls.add("http://192.168.10.2:8090/ad?id=" + adId);
-			adUrls.add("http://192.168.10.3:8090/ad?id=" + adId);
+			adUrls.add(adHostURL + "?id=" + adId);
 			e.setAdUrls(adUrls);
 
 			items.add(e);
