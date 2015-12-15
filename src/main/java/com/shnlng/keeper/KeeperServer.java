@@ -5,9 +5,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import com.shnlng.keeper.servlet.AdServlet;
-import com.shnlng.keeper.servlet.EchoServlet;
-import com.shnlng.keeper.servlet.MenuServlet;
+import com.shnlng.keeper.servlet.ResServlet;
+import com.shnlng.keeper.servlet.BeatServlet;
+import com.shnlng.keeper.servlet.TalkServlet;
 
 public class KeeperServer extends Server {
 	private static final Logger logger = Logger.getLogger(KeeperServer.class);
@@ -40,14 +40,14 @@ public class KeeperServer extends Server {
 
 	private void setServlets() {
 		logger.info("set servlets");
-		logger.info("set echo servlet to handle mapping /echo");
-		this.context.addServlet(new ServletHolder(new EchoServlet()), "/echo");
+		logger.info("set echo servlet to handle mapping /beat");
+		this.context.addServlet(new ServletHolder(new BeatServlet()), "/beat");
 
-		logger.info("set show servlet to handle mapping /ad");
-		this.context.addServlet(new ServletHolder(new AdServlet()), "/ad");
+		logger.info("set show servlet to handle mapping /res");
+		this.context.addServlet(new ServletHolder(new ResServlet()), "/res");
 		
-		logger.info("set show servlet to handle mapping /menu");
-		this.context.addServlet(new ServletHolder(new MenuServlet()), "/menu");
+		logger.info("set show servlet to handle mapping /talk");
+		this.context.addServlet(new ServletHolder(new TalkServlet()), "/talk");
 	}
 
 	public void run() {

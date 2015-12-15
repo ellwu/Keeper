@@ -17,11 +17,11 @@ import org.apache.log4j.Logger;
 
 import com.shnlng.keeper.Bootstrap;
 
-public class AdServlet extends HttpServlet {
-	
+public class ResServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-	
-	private static Logger logger = Logger.getLogger(AdServlet.class);
+
+	private static Logger logger = Logger.getLogger(ResServlet.class);
 	private String keeperRepoPath;
 	private int bufferSize = 2048;
 
@@ -36,8 +36,8 @@ public class AdServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String id = req.getParameter("id");
-		if (StringUtils.isEmpty(id)) {
+		String rid = req.getParameter("rid");
+		if (StringUtils.isEmpty(rid)) {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
@@ -45,7 +45,7 @@ public class AdServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
 
-		String showFileName = keeperRepoPath + File.separator + id;
+		String showFileName = keeperRepoPath + File.separator + rid;
 		File file = new File(showFileName);
 
 		logger.info("download file id: " + showFileName);
@@ -57,24 +57,24 @@ public class AdServlet extends HttpServlet {
 		} else {
 			logger.info("file download starting...");
 			resp.reset();
-			resp.setHeader("Content-disposition", "attachment;filename=" + id);
-			
+			resp.setHeader("Content-disposition", "attachment;filename=" + rid);
+
 			ServletOutputStream sops = null;
 			FileInputStream fis = null;
-			
-			try{
+
+			try {
 				sops = resp.getOutputStream();
 				fis = new FileInputStream(file);
-				
+
 				copyStream(fis, sops, true);
-			}catch(Exception e){
+			} catch (Exception e) {
 				logger.error("closing io" + e.getMessage());
-			}finally{
+			} finally {
 				logger.info("closing io");
 				fis.close();
 				sops.close();
 			}
-			
+
 			fis = null;
 			sops = null;
 			file = null;
