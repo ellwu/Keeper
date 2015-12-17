@@ -7,6 +7,7 @@ public class TalkReponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private String date;
 	private String mid;
 	private String mname;
 	private int mmaxitems;
@@ -42,6 +43,14 @@ public class TalkReponse implements Serializable {
 
 	public void setItems(List<TalkItem> items) {
 		this.items = items;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 }
