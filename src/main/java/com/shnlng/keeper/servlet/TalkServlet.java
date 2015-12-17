@@ -57,5 +57,10 @@ public class TalkServlet extends HttpServlet {
 
 		logger.info("start menu download");
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
 
 }
